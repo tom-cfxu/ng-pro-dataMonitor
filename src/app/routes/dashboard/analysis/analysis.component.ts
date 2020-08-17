@@ -4,7 +4,7 @@ import { STColumn } from '@delon/abc';
 import { getTimeDistance, deepCopy } from '@delon/util';
 import { _HttpClient } from '@delon/theme';
 import { I18NService } from '@core';
-import { yuan } from '@shared';
+// import { yuan } from '@shared';
 
 @Component({
   selector: 'app-dashboard-analysis',
@@ -12,13 +12,13 @@ import { yuan } from '@shared';
   styleUrls: ['./analysis.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardAnalysisComponent implements OnInit {
+export class AnalysisComponent implements OnInit {
   constructor(
     private http: _HttpClient,
     public msg: NzMessageService,
     private i18n: I18NService,
     private cdr: ChangeDetectorRef,
-  ) {}
+  ) { }
   data: any = {};
   loading = true;
   date_range: Date[] = [];
@@ -26,7 +26,7 @@ export class DashboardAnalysisComponent implements OnInit {
     .fill({})
     .map((item, i) => {
       return {
-        title: this.i18n.fanyi('app.analysis.test', { no: i }),
+        title: `${i + 1}号楼`,
         total: 323234,
       };
     });
@@ -63,7 +63,7 @@ export class DashboardAnalysisComponent implements OnInit {
   salesPieData: any;
   salesTotal = 0;
 
-  saleTabs: any[] = [{ key: 'sales', show: true }, { key: 'visits' }];
+  saleTabs: any[] = [{ key: '园区用水量', show: true }];
 
   offlineIdx = 0;
 
@@ -88,8 +88,8 @@ export class DashboardAnalysisComponent implements OnInit {
       this.salesType === 'all'
         ? this.data.salesTypeData
         : this.salesType === 'online'
-        ? this.data.salesTypeDataOnline
-        : this.data.salesTypeDataOffline;
+          ? this.data.salesTypeDataOnline
+          : this.data.salesTypeDataOffline;
     if (this.salesPieData) {
       this.salesTotal = this.salesPieData.reduce((pre, now) => now.y + pre, 0);
     }
@@ -97,7 +97,7 @@ export class DashboardAnalysisComponent implements OnInit {
   }
 
   handlePieValueFormat(value: any) {
-    return yuan(value);
+    return (value);
   }
   salesChange(idx: number) {
     if (this.saleTabs[idx].show !== true) {

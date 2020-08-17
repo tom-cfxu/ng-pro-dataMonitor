@@ -18,7 +18,7 @@ export class DashboardAnalysisComponent implements OnInit {
     public msg: NzMessageService,
     private i18n: I18NService,
     private cdr: ChangeDetectorRef,
-  ) {}
+  ) { }
   data: any = {};
   loading = true;
   date_range: Date[] = [];
@@ -88,8 +88,8 @@ export class DashboardAnalysisComponent implements OnInit {
       this.salesType === 'all'
         ? this.data.salesTypeData
         : this.salesType === 'online'
-        ? this.data.salesTypeDataOnline
-        : this.data.salesTypeDataOffline;
+          ? this.data.salesTypeDataOnline
+          : this.data.salesTypeDataOffline;
     if (this.salesPieData) {
       this.salesTotal = this.salesPieData.reduce((pre, now) => now.y + pre, 0);
     }

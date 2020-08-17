@@ -1,36 +1,53 @@
 <nz-card [nzBordered]="false" class>
-    <form nz-form [nzLayout]="'inline'" (ngSubmit)="getData()" class="search__form">
+    <!-- 刷新数据 -->
+    <form nz-form [nzLayout]="'inline'" (ngSubmit)="filterData()" class="search__form">
         <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 24, xl: 48, xxl: 48 }">
             <div nz-col nzMd="8" nzSm="24">
                 <nz-form-item>
-                    <nz-form-label nzFor="no">设备编号</nz-form-label>
+                    <nz-form-label nzFor="equipId">设备编号</nz-form-label>
                     <nz-form-control>
-                        <input nz-input [(ngModel)]="q.no" name="no" placeholder="请输入" id="no">
+                        <input nz-input [(ngModel)]="q.equipId" name="equipId" placeholder="请输入" id="no">
                     </nz-form-control>
                 </nz-form-item>
             </div>
-            <div nz-col nzMd="8" nzSm="24">
+            <!-- 根据状态来查询 -->
+            <!-- <div nz-col nzMd="6" nzSm="24">
                 <nz-form-item>
                     <nz-form-label nzFor="status">设备状态</nz-form-label>
                     <nz-form-control>
-                        <nz-select [(ngModel)]="q.status" name="status" id="status" [nzPlaceHolder]="'请选择'"
-                            [nzShowSearch]="true">
-                            <nz-option *ngFor="let i of status; let idx = index" [nzLabel]="i.text" [nzValue]="idx">
+                        <nz-select nzMode="multiple" [(ngModel)]="q.status" name="status" id="status"
+                            [nzPlaceHolder]="'请选择'" [nzShowSearch]="true">
+                            <nz-option nzCustomContent *ngFor="let i of status; let idx = index" [nzLabel]="i.text"
+                                [nzValue]="i.text">
+                                <nz-badge [nzStatus]="i.type" [nzText]="i.text"></nz-badge>
                             </nz-option>
                         </nz-select>
                     </nz-form-control>
                 </nz-form-item>
-            </div>
+            </div> -->
+            <!-- <div nz-col nzMd="6" nzSm="24">
+                <nz-form-item>
+                    <nz-form-label nzFor="status">报警状态</nz-form-label>
+                    <nz-form-control>
+                        <nz-select nzMode="multiple" [(ngModel)]="q.alarms" name="alarms" id="alarms"
+                            [nzPlaceHolder]="'请选择'" [nzShowSearch]="true">
+                            <nz-option nzCustomContent *ngFor="let i of alarms; let idx = index" [nzLabel]="i.text"
+                                [nzValue]="i.text">
+                                <nz-badge [nzStatus]="i.type" [nzText]="i.text"></nz-badge>
+                            </nz-option>i
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div> -->
             <div nz-col nzSpan="8" [class.text-right]="expandForm">
-                <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="loading">查询</button>
+                <button nz-button
+                    [disabled]="(q.equipId==null||q.equipId.length==0)&&(q.status==null||q.status.length==0)&&(q.alarms==null||q.alarms.length==0)"
+                    type="submit" [nzType]="'primary'" [nzLoading]="loading">查询</button>
                 <button nz-button type="reset" (click)="reset()" class="mx-sm">重置</button>
             </div>
         </div>
     </form>
-    <!-- <button nz-button (click)="add(modalContent)" [nzType]="'primary'">
-            <i nz-icon nzType="plus"></i>
-            <span>新建</span>
-        </button> -->
+
     <ng-container *ngIf="selectedRows.length > 0">
         <button nz-button>批量操作</button>
         <button nz-button nz-dropdown [nzDropdownMenu]="batchMenu" nzPlacement="bottomLeft">
@@ -44,29 +61,25 @@
             </ul>
         </nz-dropdown-menu>
     </ng-container>
-    <!-- <div class="my-md">
-            <nz-alert [nzType]="'info'" [nzShowIcon]="true" [nzMessage]="message">
-                <ng-template #message>
-                    已选择
-                    <strong class="text-primary">{{ selectedRows.length }}</strong>
-                    项&nbsp;&nbsp; 服务调用总计
-                    <strong>{{ totalCallNo }}</strong>
-                    万
-                    <a *ngIf="totalCallNo > 0" (click)="st.clearCheck()" class="ml-lg">清空</a>
-                </ng-template>
-            </nz-alert>
-        </div> -->
-    <st #st [columns]="columns" [data]="data" [loading]="loading" (change)="stChange($event)">
-        <ng-template st-row="status" let-i>
-            <nz-badge [nzStatus]="i.statusType" [nzText]="i.statusText"></nz-badge>
+
+    <st #st [columns]="columns" [data]="data" [loading]="loading">
+        <ng-template #equipStatus st-row="equipStatus" let-item let-column="column">
+            <div *ngFor="let t of item.equipStatus let i=index">
+                <nz-badge [nzStatus]="t.statusType" [nzText]="t.statusText"></nz-badge>
+            </div>
+        </ng-template>
+        <ng-template #dataAlarm st-row="dataAlarm" let-item let-column="column">
+            <div *ngFor="let t of item.dataAlarm let i=index">
+                <nz-badge [nzStatus]="t.statusType" [nzText]="t.statusText"></nz-badge>
+            </div>
         </ng-template>
     </st>
 </nz-card>
-<ng-template #modalContent>
+<!-- <ng-template #modalContent>
     <nz-form-item>
         <nz-form-label nzFor="no">描述</nz-form-label>
         <nz-form-control>
             <input nz-input [(ngModel)]="description" name="description" placeholder="请输入" id="no">
         </nz-form-control>
     </nz-form-item>
-</ng-template>
+</ng-template> -->

@@ -12,10 +12,12 @@ import {
   MonitorOutline,
   AreaChartOutline,
   LineChartOutline,
-  TableOutline
+  TableOutline,
+  EnvironmentOutline
 } from '@ant-design/icons-angular/icons';
 
 export const ICONS = [
+  EnvironmentOutline,
   AreaChartOutline,
   InfoOutline,
   BulbOutline,

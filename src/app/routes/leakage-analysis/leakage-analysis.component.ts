@@ -1,12 +1,87 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { G2TimelineData } from '@delon/chart';
+import { STColumn, STPage } from '@delon/abc';
+import { getTimeDistance } from '@delon/util';
+
+//随机数
+const r = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1) + min);
+const TOOLBOX = {
+  show: true,
+  feature: {
+    // mark: {show: true},
+    restore: { show: true },
+    saveAsImage: { show: true }
+  }
+}
 @Component({
   selector: 'app-leakage-analysis',
   templateUrl: './leakage-analysis.component.html',
   styleUrls: ['./leakage-analysis.component.less']
 })
 export class LeakageAnalysisComponent implements OnInit {
-  //漏损率设置
-  LeakageRateOption = {
+  //表格数据
+  realtimeData: any[] = [];
+  //表格配置
+  columns: STColumn[] = [
+    {
+      title: '',
+      index: 'id',
+      sorter: (a: any, b: any) => a.id - b.id,
+      // width: 10,
+    },
+    {
+      title: '设备所属',
+      index: 'bid',
+      // sort: { compare: (a, b) => a.bid - b.bid },
+      // width: 60,
+    },
+    {
+      title: '设备编号',
+      index: 'eid',
+      // sort: { compare: (a, b) => a.eid - b.eid },
+      // width: 60,
+    },
+    {
+      title: '用水量 (m³)',
+      index: 'water',
+      sorter: (a: any, b: any) => a.water - b.water,
+      // width: 60,
+    },
+    {
+      title: '漏损量 (m³)',
+      index: 'leak',
+      sorter: (a: any, b: any) => a.leak - b.leak,
+      // width: 60,
+    },
+    {
+      title: '漏损率',
+      index: 'leakRate',
+      render: 'custom',
+      sorter: (a: any, b: any) => a.leakRate - b.leakRate,
+      // tag: TAG
+      // width: 60,
+    },
+  ];
+  //表格加载
+  tableToading: boolean = false;
+  //表格分页配置
+  page: STPage = {
+    front: true,
+    pageSizes: [10, 15, 20, 30, 40, 50, 60, 100, 120],
+    showSize: true,
+    showQuickJumper: true,
+    total: true,
+    position: "bottom",
+    placement: "center"
+  };
+  //日期选择器值
+  dateValue: any = "month";
+  //日期选择器
+  date_range: Date[] = [];
+  //用水量
+
+  //漏损率仪表盘
+  option1 = {
     backgroundColor: '#fff',
     tooltip: {
       formatter: '{a} <br/>{c}%'
@@ -17,14 +92,7 @@ export class LeakageAnalysisComponent implements OnInit {
       bottom: "5%",
       right: "5%"
     },
-    toolbox: {
-      show: true,
-      feature: {
-        // mark: {show: true},
-        restore: { show: true },
-        saveAsImage: { show: true }
-      }
-    },
+    toolbox: TOOLBOX,
     series: [
       {
         name: '漏损率(%)',
@@ -71,6 +139,7 @@ export class LeakageAnalysisComponent implements OnInit {
           shadowBlur: 5
         },
         title: {
+          show: false,
           textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
             fontWeight: 'bolder',
             fontSize: 20,
@@ -100,30 +169,18 @@ export class LeakageAnalysisComponent implements OnInit {
       },
     ]
   };
-  //用水漏水量设置
+  //用水漏水量饼图
   option2 = {
-    color: ['#FFB070', '#58afff'],
+    color: ['#ff5500', '#58afff'],
     tooltip: {
       trigger: 'item',
       formatter: '{a} <br/>{b}: {c}吨 ({d}%)',
-
     },
-    toolbox: {
-      show: true,
-      feature: {
-        // mark: {show: true},
-        restore: { show: true },
-        saveAsImage: { show: true }
-      }
-    },
+    toolbox: TOOLBOX,
     legend: {
       orient: 'vertical',
       left: 10,
       data: ['漏水量', '用水量'],
-      // icon: [
-      //   'path://M86.5,30.5C213.58,191.17,110,198.58,89.75,198.58c-2.06,0-3.25-.08-3.25-.08-138-6,0-168,0-168m.26-14.18-7.11,8.34A416.6,416.6,0,0,0,42,78.09c-24.18,41.19-31.44,73.55-21.58,96.18,8.94,20.52,31,31.7,65.61,33.22.4,0,1.72.09,3.71.09a101.07,101.07,0,0,0,29.69-4.43c15.71-5,27.19-14.26,33.21-26.7,7.22-14.92,6.71-34.19-1.53-57.28-9.25-25.95-28.62-57.66-57.56-94.25l-6.8-8.6Z',
-      //   'path://M30.9,53.2C16.8,53.2,5.3,41.7,5.3,27.6S16.8,2,30.9,2C45,2,56.4,13.5,56.4,27.6S45,53.2,30.9,53.2z M30.9,3.5C17.6,3.5,6.8,14.4,6.8,27.6c0,13.3,10.8,24.1,24.101,24.1C44.2,51.7,55,40.9,55,27.6C54.9,14.4,44.1,3.5,30.9,3.5z M36.9,35.8c0,0.601-0.4,1-0.9,1h-1.3c-0.5,0-0.9-0.399-0.9-1V19.5c0-0.6,0.4-1,0.9-1H36c0.5,0,0.9,0.4,0.9,1V35.8z M27.8,35.8 c0,0.601-0.4,1-0.9,1h-1.3c-0.5,0-0.9-0.399-0.9-1V19.5c0-0.6,0.4-1,0.9-1H27c0.5,0,0.9,0.4,0.9,1L27.8,35.8L27.8,35.8z'
-      // ],
     },
     series: [
       {
@@ -131,12 +188,10 @@ export class LeakageAnalysisComponent implements OnInit {
         type: 'pie',
         selectedMode: 'single',
         radius: [0, '80%'],
-
         label: {
           position: 'inner',
           formatter: '{b}\n\n{d}%',
           fontSize: 15,
-          // color: "#fff",
           borderWidth: 0
         },
         labelLine: {
@@ -150,9 +205,238 @@ export class LeakageAnalysisComponent implements OnInit {
       },
     ]
   };
-  constructor() { }
+  //用水统计
+  option3 = {
+    color: ["#8ccfec", "#facd91"],
+    tooltip: {
+      trigger: 'axis',
+      formatter: '{a}<br/>{b}: {c} 吨'
+    },
+    toolbox: TOOLBOX,
+    grid: {
+      tooltip: {
+        show: true
+      },
+      left: "15%",
+      top: "15%",
+      right: "5%",
+      bottom: "10%",
+      // show: true
+    },
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      data: ['05月', '06月', '07月'],
+      axisTick: {
+        show: false
+      },
+      axisLabel: {
+        color: "#aaa"
+      },
 
+      axisLine: {
+        lineStyle: {
+          color: "#aaa"
+        }
+      },
+
+    },
+    yAxis: {
+      type: 'value',
+      axisLabel: {
+        color: "#aaa"
+      },
+      axisLine: {
+        // show: false,
+        lineStyle: {
+          color: "#aaa"
+        }
+      },
+      axisTick: {
+        show: false
+      },
+    },
+    series: [{
+      name: '用水量',
+      data: [820, 932, 901,],
+      type: 'line',
+      smooth: true,
+      areaStyle: {}
+    }]
+  };
+  //漏损统计
+  option4 = {
+    color: ["#facd91"],
+    tooltip: {
+      trigger: 'axis',
+      formatter: '{a}<br/>{b}: {c} 吨'
+    },
+    grid: {
+      tooltip: {
+        show: true
+      },
+      left: "15%",
+      top: "15%",
+      right: "5%",
+      bottom: "10%",
+      // show: true
+    },
+    toolbox: TOOLBOX,
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      data: ['05月', '06月', '07月'],
+      axisTick: {
+        show: false
+      },
+      axisLabel: {
+        color: "#aaa"
+      },
+
+      axisLine: {
+        lineStyle: {
+          color: "#aaa"
+        }
+      },
+
+    },
+    yAxis: {
+      type: 'value',
+      axisLabel: {
+        color: "#aaa"
+      },
+      axisLine: {
+        // show: false,
+        lineStyle: {
+          color: "#aaa"
+        }
+      },
+      axisTick: {
+        show: false
+      },
+    },
+    series: [{
+      name: '漏损量',
+      data: [120, 200, 100,],
+      type: 'line',
+      smooth: true,
+      areaStyle: {}
+    }]
+  }
+  //实时趋势
+  chartData: G2TimelineData[] = [];
+  //按日期查找数据按钮
+  search() {
+    let start = this.date_range[0];
+    let end = this.date_range[1];
+    let diff = end.getTime() - start.getTime();
+    const d = Math.floor(diff / 1000 / 60 / 60 / 24) + 1;
+    this.randomDate(r(0, 200), d * 200, d * 40);
+  }
+  //实时趋势事件
+  handleClick(e) {
+    console.log(e);
+  }
+  //随机数
+
+  //设置日期事件
+  setDate() {
+    // console.log(this.dateValue);
+    this.date_range = getTimeDistance(this.dateValue);
+    setTimeout(() => this.cdr.detectChanges());
+    switch (this.dateValue) {
+      case "today":
+        this.randomDate(r(6, 10), 200, 40);
+        break;
+      case "week":
+        this.randomDate(r(30, 40), 1600, 300);
+        break;
+      case "month":
+        this.randomDate(r(120, 130), 6500, 1400);
+        break;
+      case "year":
+        this.randomDate(r(1400, 1500), 72000, 18000);
+        break;
+    }
+    // this.randomDate(50)
+  }
+  //随机数据
+  randomDate(num: number, water: number, leak: number) {
+    this.tableToading = true;
+    setTimeout(() => {
+      this.tableToading = false;
+      this.realtimeData = Array(num).fill({}).map((_item: any, idx: number) => {
+        return {
+          id: idx + 1,
+          bid: `${Math.floor(Math.random() * 3 + 1)}号楼`,
+          eid: `LXSXY${r(1, 15)}-0${r(1, 3)}`,
+          water: `${r(water, water + 500).toFixed(2)}`,
+          leak: `${r(0, leak).toFixed(2)}`,
+          // leakRate: (leak/water),
+        }
+      })
+      this.realtimeData.forEach(e => {
+        e.leakRate = ((e.leak / e.water) * 100).toFixed(1);
+        e.leakRateColor = e.leakRate > 15 ? "#f50" : (e.leakRate > 10 ? "#f59a23" : "#87d068")
+      })
+    }, 500)
+  }
+  constructor(
+    private cdr: ChangeDetectorRef,
+  ) { }
+  //表格点击
+  _stClick(e) {
+    if (e.type == "click") {
+      // console.log(e.click.item);
+      var { water, leak, leakRate } = e.click.item;
+      this.setOption("option1", leakRate);
+      this.setOption("option2", { leak, water });
+    }
+  }
+
+  setOption(optionName: string, data: any) {
+    switch (optionName) {
+      case "option1":
+        this.option1.series[0].data = [{ value: data, name: "漏损率(%)" }];
+        this.option1 = { ...this.option1 };
+        break;
+      case "option2":
+        this.option2.series[0].data = [
+          { value: data.leak, name: '漏水量', selected: true },
+          { value: data.water, name: '用水量' },
+        ];
+        this.option2 = { ...this.option2 };
+        break;
+    }
+  }
   ngOnInit() {
+    this.randomDate(120, 6500, 1400)
+    this.chartData = Array(10).fill({}).map((data: any, i: number) => {
+      return {
+        x: new Date().getTime() - 2000 * i,
+        y1: Math.floor(Math.random() * 100) + 1000,
+        y2: Math.floor(Math.random() * 100) + 10,
+      }
+    }).sort((a, b) => b.x - a.x);
+    //定时生成数据
+    setInterval(() => {
+      //漏损率
+      // this.option1.series[0].data = [{ value: r(0, 100), name: "漏损率(%)" }];
+      // this.option1 = { ...this.option1 };
+      this.chartData.shift();
+      this.chartData.push({
+        x: new Date().getTime(),
+        y1: Math.floor(Math.random() * 100) + 1000,
+        y2: Math.floor(Math.random() * 100) + 10,
+      })
+      this.chartData = [...this.chartData];
+      // console.log(this.chartData);
+      // console.log(new Date().getTime() + 1000 * 60 * 30)
+      //
+    }, 2000)
+    // this.option1.series[0].data = [{ value: 30, name: "漏损率(%)" }];
+    // console.log(this.chartData);
+
   }
 
 }

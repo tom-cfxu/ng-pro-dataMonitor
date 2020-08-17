@@ -1,7 +1,7 @@
 {
   "app": {
     "name": "能耗监测平台",
-    "description": "Ng-zorro admin panel front-end framework"
+    "description": "能耗监测平台"
   },
   "user": {
     "name": "Admin",

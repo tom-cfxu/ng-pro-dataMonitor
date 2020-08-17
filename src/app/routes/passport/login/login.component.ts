@@ -125,9 +125,9 @@ export class UserLoginComponent implements OnDestroy {
         this.tokenService.set(res.user);
         // 重新获取 StartupService 内容，我们始终认为应用信息一般都会受当前用户授权范围而影响
         this.startupSrv.load().then(() => {
-          let url = this.tokenService.referrer!.url || '/';
+          let url = this.tokenService.referrer!.url || '/home';
           if (url.includes('/passport')) {
-            url = '/';
+            url = '/home';
           }
           this.router.navigateByUrl(url);
         });

@@ -54,7 +54,8 @@ import {
   MonitorOutline,
   AreaChartOutline,
   LineChartOutline,
-  TableOutline
+  TableOutline,
+  EnvironmentOutline
 } from '@ant-design/icons-angular/icons';
 
 export const ICONS_AUTO = [
@@ -108,5 +109,6 @@ export const ICONS_AUTO = [
   UsbOutline,
   UserOutline,
   WeiboCircleOutline,
-  TableOutline
+  TableOutline,
+  EnvironmentOutline
 ];

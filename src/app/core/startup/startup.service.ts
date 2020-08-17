@@ -75,13 +75,25 @@ export class StartupService {
                     "children": [
                       {
                         "text": "监测总览",
-                        "link": "/dashboard/analysis",
+                        "link": "/home/dashboard/analysis",
                         "reuse": true,
                         // "i18n": "menu.dashboard.analysis"
                       },
                       {
                         "text": "实时监测数据",
-                        "link": "/dashboard/real-data-monitor",
+                        "link": "/home/dashboard/realtime-data-monitor",
+                        "reuse": true,
+                        // "i18n": "menu.dashboard.realdatamonitor"
+                      },
+                      {
+                        "text": "分区用水详情",
+                        "link": "/home/dashboard/district-water-usage-details",
+                        "reuse": true,
+                        // "i18n": "menu.dashboard.realdatamonitor"
+                      },
+                      {
+                        "text": "管网部署详情",
+                        "link": "/home/dashboard/official-website-deployment-details",
                         "reuse": true,
                         // "i18n": "menu.dashboard.realdatamonitor"
                       },
@@ -92,15 +104,43 @@ export class StartupService {
                     "icon": "anticon anticon-monitor",
                     "shortcutRoot": true,
                     "reuse": true,
-                    "link": "/leakage-analysis",
+                    "link": "/home/leakage-analysis",
                     // "children": []
+                  },
+                  {
+                    "text": "运维管理",
+                    "icon": "anticon anticon-setting",
+                    "shortcutRoot": true,
+                    "reuse": true,
+                    "children": [
+                      {
+                        "text": "监测工单派发",
+                        "link": "/home/operation-management/monitor-work-order-dispatch",
+                        "reuse": true,
+                        // "i18n": "menu.dashboard.realdatamonitor"
+                      },
+                      {
+                        "text": "检修进度详情",
+                        "link": "/home/operation-management/overhaul-progress-details",
+                        "reuse": true,
+                        // "i18n": "menu.dashboard.realdatamonitor"
+                      },
+                    ]
                   },
                   {
                     "text": "历史数据",
                     "icon": "anticon anticon-history",
                     "shortcutRoot": true,
                     "reuse": true,
-                    "link": "/dashboard/monitor",
+                    "link": "/home/history-data",
+                    // "children": []
+                  },
+                  {
+                    "text": "GIS地理信息",
+                    "icon": "anticon anticon-environment",
+                    "shortcutRoot": true,
+                    "reuse": true,
+                    "link": "/home/gis-info",
                     // "children": []
                   },
                 ]

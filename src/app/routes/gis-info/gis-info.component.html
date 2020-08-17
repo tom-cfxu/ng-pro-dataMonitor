@@ -1,0 +1,63 @@
+<div>
+    <nz-card style="height:85vh;overflow: hidden;" nzTitle="分区用水详情" nzBordered="false">
+        <div nz-row nzXs="24" nzSm="24" nzMd="24" nzLg="24">
+            <div class="card-box" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="12">
+                <nz-card nzBordered="false">
+                    <div nz-row [nzGutter]="24">
+                        <div nz-col nzXs="12" nzSm="12" nzMd="12" nzLg="12">
+                            <h3 class="title">福州xx有限公司</h3>
+                            <g2-mini-area line="true" borderColor="#83DAFF" color="#c0e9fc" height="180"
+                                [data]="waterUserData">
+                            </g2-mini-area>
+                            <div class="g2-msg">
+                                <span class="g2-mag-span">今日需水(m³)</span>
+                                <p class="title">88,456</p>
+                            </div>
+
+                        </div>
+                        <div nz-col nzXs="12" nzSm="12" nzMd="12" nzLg="12">
+                            <form nz-form>
+                                <nz-form-item>
+                                    <nz-form-label [nzSpan]="8" nzFor="energyType">用能类型</nz-form-label>
+                                    <nz-form-control [nzSpan]="12">
+                                        <nz-select id="energyType" name="energyType" [(ngModel)]="energyType">
+                                            <nz-option nzValue="0" nzLabel="水"></nz-option>
+                                            <nz-option nzValue="1" nzLabel="电"></nz-option>
+                                            <nz-option nzValue="2" nzLabel="天然气"></nz-option>
+                                        </nz-select>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </form>
+                            <span>供水量:8900</span>
+                            <g2-mini-progress height="46" percent="80" strokeWidth="8" target="80" color="#1890ff">
+                            </g2-mini-progress>
+                            <span>漏损量:23</span>
+                            <g2-mini-progress height="46" percent="80" strokeWidth="8" target="80" color="#1890ff">
+                            </g2-mini-progress>
+                            <nz-date-picker class="date-picker" nzShowTime nzFormat="YYYY-MM-DD HH:mm:ss"
+                                nzPlaceHolder="请采集时间" [(ngModel)]="date" (ngModelChange)="onChange($event)"
+                                (nzOnOk)="onOk($event)">
+                            </nz-date-picker>
+                        </div>
+                    </div>
+                </nz-card>
+            </div>
+            <div class="card-box" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="12">
+                <nz-card style="height:256px" nzBordered="false">
+                    <h3 class="title">用水趋势</h3>
+                    <div echarts [options]="option1" class="chart-row1"></div>
+                </nz-card>
+            </div>
+        </div>
+        <!-- <hr color="#e8e8e8" /> -->
+        <div class="gis-info">
+            <div class="gis-info-map">
+
+            </div>
+            <div *ngFor="let item of mock_factory_data;let i= index" [ngClass]="'gis-info-msg box'+i">
+                <p>用水量: {{item.use}}m³</p>
+                <p>漏损量: {{item.leak}}m³</p>
+            </div>
+        </div>
+    </nz-card>
+</div>
