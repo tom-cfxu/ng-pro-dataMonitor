@@ -8,36 +8,47 @@
     </div>
   </nz-sider>
 </ng-template>
-<div class="ant-layout ant-layout-has-sider">
-  <ng-container *ngIf="pro.menu === 'side' || isMobile">
-    <nz-drawer *ngIf="isMobile" [nzWidth]="pro.width" nzWrapClassName="alain-pro__drawer" [nzVisible]="!pro.collapsed"
-      [nzClosable]="false" nzPlacement="left" (nzOnClose)="pro.setCollapsed(true)">
-      <ng-template [ngTemplateOutlet]="sideTpl"></ng-template>
-    </nz-drawer>
-    <ng-container *ngIf="!isMobile">
-      <ng-template [ngTemplateOutlet]="sideTpl"></ng-template>
-    </ng-container>
-  </ng-container>
-  <div class="ant-layout" style="min-height: 100vh;" [ngStyle]="getLayoutStyle">
-    <layout-pro-header></layout-pro-header>
-    <!--
-      NOTICE: Route reuse strategy tag placeholder, please refer to: https://ng-alain.com/components/reuse-tab
-      - Not supported top header fixed mode
-      ```html
-      <reuse-tab></reuse-tab>
-      ```
-    -->
-    <reuse-tab #reuseTab></reuse-tab>
-    <div class="ant-layout-content alain-pro__body" [ngStyle]="getContentStyle">
-      <div *ngIf="isFetching" style="padding-top: 100px; text-align: center;">
-        <nz-spin nzSpinning></nz-spin>
-      </div>
-      <ng-container *ngIf="!isFetching">
-        <router-outlet></router-outlet>
+<div style="position: relative;">
+  <div class="layout-timer">
+    <layout-pro-time></layout-pro-time>
+  </div>
+  <div class="ant-layout ant-layout-has-sider">
+    <ng-container *ngIf="pro.menu === 'side' || isMobile">
+      <nz-drawer *ngIf="isMobile" [nzWidth]="pro.width" nzWrapClassName="alain-pro__drawer" [nzVisible]="!pro.collapsed"
+        [nzClosable]="false" nzPlacement="left" (nzOnClose)="pro.setCollapsed(true)">
+        <ng-template [ngTemplateOutlet]="sideTpl"></ng-template>
+      </nz-drawer>
+      <ng-container *ngIf="!isMobile">
+        <ng-template [ngTemplateOutlet]="sideTpl"></ng-template>
       </ng-container>
+    </ng-container>
+
+    <div class="ant-layout" style="min-height: 100vh;" [ngStyle]="getLayoutStyle">
+
+
+      <layout-pro-header></layout-pro-header>
+      <!--
+        NOTICE: Route reuse strategy tag placeholder, please refer to: https://ng-alain.com/components/reuse-tab
+        - Not supported top header fixed mode
+        ```html
+        <reuse-tab></reuse-tab>
+        ```
+      -->
+
+      <reuse-tab #reuseTab></reuse-tab>
+      <div class="ant-layout-content alain-pro__body" [ngStyle]="getContentStyle">
+        <div *ngIf="isFetching" style="padding-top: 100px; text-align: center;">
+          <nz-spin nzSpinning></nz-spin>
+        </div>
+        <ng-container *ngIf="!isFetching">
+          <router-outlet></router-outlet>
+        </ng-container>
+      </div>
+      <layout-pro-footer class="ant-layout-footer alain-pro__footer"></layout-pro-footer>
     </div>
-    <layout-pro-footer class="ant-layout-footer alain-pro__footer"></layout-pro-footer>
   </div>
 </div>
+
+
 <!-- <ng-template #settingHost></ng-template> -->
 <!-- <quick-chat></quick-chat> -->

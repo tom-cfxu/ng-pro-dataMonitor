@@ -6,7 +6,8 @@ import { PRO_ENTRYCOMPONENTS, PRO_COMPONENTS } from './pro/index';
 
 // passport
 import { LayoutPassportComponent } from './passport/passport.component';
-const PASSPORT = [LayoutPassportComponent];
+import { WeekdayPipe } from '@brand/pipe/weekday.pipe';
+const PASSPORT = [LayoutPassportComponent, WeekdayPipe];
 
 @NgModule({
   imports: [SharedModule, CDKLayoutModule],
@@ -14,4 +15,4 @@ const PASSPORT = [LayoutPassportComponent];
   declarations: [...PRO_COMPONENTS, ...PASSPORT],
   exports: [...PRO_COMPONENTS, ...PASSPORT],
 })
-export class LayoutModule {}
+export class LayoutModule { }

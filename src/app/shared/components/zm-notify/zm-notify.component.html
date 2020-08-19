@@ -1,0 +1,24 @@
+<div class="notify" *ngIf="data.length>0">
+    <!-- <h3>你好</h3> -->
+    <!-- <ng-template>
+
+    </ng-template> -->
+    <ul class="notify-ul" *ngFor="let item of data let i=index">
+        <li class="notify-ul-li">
+            <div class="notify-li-item">
+                <div class="notify-icon">
+                    <img
+                        [src]="item.isAlarm?'../../../../assets/notify-error.png':'../../../../assets/notify-success.png'">
+                </div>
+                <div class="notify-info">
+                    <h4 *ngIf="item.isAlarm;else elseBlock" class="info-title">{{item.deviceName}} 存在 <span
+                            class="error-status">{{item.status}}</span>告警</h4>
+                    <ng-template #elseBlock>
+                        <h4 class="info-title">{{item.deviceName}} 告警已处理</h4>
+                    </ng-template>
+                    <p class="info-time">{{item.dateTime}}</p>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

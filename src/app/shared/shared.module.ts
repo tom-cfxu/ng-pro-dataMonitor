@@ -40,6 +40,7 @@ import { StatusLabelComponent } from './components/status-label/status-label.com
 import { MouseFocusDirective } from './components/mouse-focus/mouse-focus.directive';
 import { QUICK_CHAT_COMPONENTS } from './components/quick-chat';
 import { AddressComponent } from './components/address/address.component';
+import { ZmNotifyComponent } from './components/zm-notify/zm-notify.component';
 
 const COMPONENTS_ENTRY = [
   LangsComponent,
@@ -47,6 +48,7 @@ const COMPONENTS_ENTRY = [
   FileManagerComponent,
   StatusLabelComponent,
   AddressComponent,
+  ZmNotifyComponent,
   ...QUICK_CHAT_COMPONENTS
 ];
 const COMPONENTS = [
@@ -81,6 +83,7 @@ const DIRECTIVES = [
     // your components
     ...COMPONENTS,
     ...DIRECTIVES,
+    ZmNotifyComponent,
   ],
   entryComponents: COMPONENTS_ENTRY,
   exports: [

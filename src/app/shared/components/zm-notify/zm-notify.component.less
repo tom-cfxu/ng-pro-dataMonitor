@@ -1,0 +1,39 @@
+:host ::ng-deep {
+  .notify {
+    .notify-ul {
+      list-style-type: none;
+
+      .notify-ul-li .notify-li-item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+
+        .notify-icon {
+          margin-right: 10px;
+
+          img {
+            width: 40px;
+            height: 40px;
+            margin-top: -10px;
+          }
+        }
+
+        .notify-info {
+          h4.info-title {
+            font-weight: bold;
+
+            span.error-status {
+              color: #ff4d4f
+            }
+          }
+
+          p.info-time {
+            // font-weight: lighter;
+            color: #909090;
+          }
+        }
+      }
+    }
+  }
+}

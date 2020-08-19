@@ -43,6 +43,7 @@ import { LayoutProMenuComponent } from './components/menu/menu.component';
 import { LayoutProLogoComponent } from './components/logo/logo.component';
 import { LayoutProHeaderComponent } from './components/header/header.component';
 import { LayoutProFooterComponent } from './components/footer/footer.component';
+import { LayoutProTimeComponent } from "./components/time/time.component";
 
 export const PRO_COMPONENTS = [
   LayoutProComponent,
@@ -50,6 +51,7 @@ export const PRO_COMPONENTS = [
   LayoutProLogoComponent,
   LayoutProHeaderComponent,
   LayoutProFooterComponent,
+  LayoutProTimeComponent,
   ...PRO_ENTRYCOMPONENTS,
   ...PRO_WIDGETS,
 ];

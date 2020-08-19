@@ -4,6 +4,7 @@ import { STColumn, STPage } from '@delon/abc';
 import { getTimeDistance } from '@delon/util';
 
 //随机数
+let timer;
 const r = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1) + min);
 const TOOLBOX = {
   show: true,
@@ -419,7 +420,7 @@ export class LeakageAnalysisComponent implements OnInit {
       }
     }).sort((a, b) => b.x - a.x);
     //定时生成数据
-    setInterval(() => {
+    timer = setInterval(() => {
       //漏损率
       // this.option1.series[0].data = [{ value: r(0, 100), name: "漏损率(%)" }];
       // this.option1 = { ...this.option1 };
@@ -437,6 +438,9 @@ export class LeakageAnalysisComponent implements OnInit {
     // this.option1.series[0].data = [{ value: 30, name: "漏损率(%)" }];
     // console.log(this.chartData);
 
+  }
+  ngDestory() {
+    clearInterval(timer)
   }
 
 }

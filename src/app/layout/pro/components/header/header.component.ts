@@ -16,6 +16,18 @@ import { BrandService } from '../../pro.service';
 @Component({
   selector: 'layout-pro-header',
   templateUrl: './header.component.html',
+  styles: [`
+  .company-name{
+    position:absolute;
+    top:0;
+    left:80px;
+  }
+  @media(max-width:840px){
+      h2.company-name{
+        display:none;
+      }
+    }
+  `],
   host: {
     '[class.ant-layout-header]': 'true',
     '[class.alain-pro__header-fixed]': 'pro.fixedHeader',

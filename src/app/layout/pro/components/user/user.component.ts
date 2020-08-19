@@ -2,6 +2,7 @@ import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/cor
 import { Router } from '@angular/router';
 import { SettingsService } from '@delon/theme';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
+import { NzNotificationService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'layout-pro-user',
@@ -13,7 +14,8 @@ export class LayoutProWidgetUserComponent implements OnInit {
     public settings: SettingsService,
     private router: Router,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
-  ) {}
+    public notify: NzNotificationService
+  ) { }
 
   ngOnInit(): void {
     // mock
@@ -29,5 +31,6 @@ export class LayoutProWidgetUserComponent implements OnInit {
   logout() {
     this.tokenService.clear();
     this.router.navigateByUrl(this.tokenService.login_url);
+    this.notify.info('注销成功!', '', { nzDuration: 1000 })
   }
 }

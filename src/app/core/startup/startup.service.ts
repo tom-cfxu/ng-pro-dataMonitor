@@ -93,7 +93,7 @@ export class StartupService {
                       },
                       {
                         "text": "管网部署详情",
-                        "link": "/home/dashboard/official-website-deployment-details",
+                        "link": "/home/dashboard/pipe-network-deployment-details",
                         "reuse": true,
                         // "i18n": "menu.dashboard.realdatamonitor"
                       },

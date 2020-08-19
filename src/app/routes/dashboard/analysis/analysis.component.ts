@@ -4,8 +4,9 @@ import { STColumn } from '@delon/abc';
 import { getTimeDistance, deepCopy } from '@delon/util';
 import { _HttpClient } from '@delon/theme';
 import { I18NService } from '@core';
+import * as moment from 'moment';
 // import { yuan } from '@shared';
-
+const r = (min: number, max: number) => Math.floor(Math.random() * (max - min) + min)
 @Component({
   selector: 'app-dashboard-analysis',
   templateUrl: './analysis.component.html',
@@ -19,6 +20,7 @@ export class AnalysisComponent implements OnInit {
     private i18n: I18NService,
     private cdr: ChangeDetectorRef,
   ) { }
+  public alarmData = [];
   data: any = {};
   loading = true;
   date_range: Date[] = [];
@@ -66,7 +68,25 @@ export class AnalysisComponent implements OnInit {
   saleTabs: any[] = [{ key: '园区用水量', show: true }];
 
   offlineIdx = 0;
-
+  //生成随机报警
+  mock_alarmData() {
+    // console.log("生成随机报警")
+    const status = [
+      "连接异常",
+      "通讯异常",
+      "压力异常",
+      "温度异常",
+      "电力异常"
+    ]
+    this.alarmData = Array(r(5, 20)).fill({}).map((e, i) => {
+      return {
+        isAlarm: r(0, 2) - 1,
+        deviceName: '设备' + i + 1,
+        status: status[r(0, 5) - 1],
+        dateTime: moment().subtract(1 + 1 * i, 'minute').format('YYYY-MM-DD hh:mm:ss')
+      }
+    }).sort((a, b) => a.isAlarm)
+  }
   ngOnInit() {
     this.http.get('/chart').subscribe((res: any) => {
       res.offlineData.forEach((item: any, idx: number) => {
@@ -77,6 +97,7 @@ export class AnalysisComponent implements OnInit {
       this.loading = false;
       this.changeSaleType();
     });
+    this.mock_alarmData()
   }
 
   setDate(type: any) {
@@ -94,6 +115,8 @@ export class AnalysisComponent implements OnInit {
       this.salesTotal = this.salesPieData.reduce((pre, now) => now.y + pre, 0);
     }
     this.cdr.detectChanges();
+    this.date_range = getTimeDistance(this.salesType == "all" ? "year" : "-month");
+    setTimeout(() => this.cdr.detectChanges());
   }
 
   handlePieValueFormat(value: any) {

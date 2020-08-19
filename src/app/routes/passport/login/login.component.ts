@@ -2,7 +2,7 @@ import { SettingsService, _HttpClient } from '@delon/theme';
 import { Component, OnDestroy, Inject, Optional } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NzMessageService, NzModalService } from 'ng-zorro-antd';
+import { NzMessageService, NzModalService, NzNotificationService } from 'ng-zorro-antd';
 import { SocialService, SocialOpenType, ITokenService, DA_SERVICE_TOKEN } from '@delon/auth';
 import { ReuseTabService } from '@delon/abc';
 import { environment } from '@env/environment';
@@ -29,6 +29,7 @@ export class UserLoginComponent implements OnDestroy {
     private startupSrv: StartupService,
     public http: _HttpClient,
     public msg: NzMessageService,
+    public notify: NzNotificationService,
   ) {
     this.form = fb.group({
       userName: [null, [Validators.required, Validators.minLength(4)]],
@@ -108,30 +109,45 @@ export class UserLoginComponent implements OnDestroy {
 
     // 默认配置中对所有HTTP请求都会强制 [校验](https://ng-alain.com/auth/getting-started) 用户 Token
     // 然一般来说登录请求不需要校验，因此可以在请求URL加上：`/login?_allow_anonymous=true` 表示不触发用户 Token 校验
-    this.http
-      .post('/login/account?_allow_anonymous=true', {
-        type: this.type,
-        userName: this.userName.value,
-        password: this.password.value,
-      })
-      .subscribe((res: any) => {
-        if (res.msg !== 'ok') {
-          this.error = res.msg;
-          return;
+    // this.http
+    //   .post('/login/account?_allow_anonymous=true', {
+    //     type: this.type,
+    //     userName: this.userName.value,
+    //     password: this.password.value,
+    //   })
+    //   .subscribe((res: any) => {
+    // if (res.msg !== 'ok') {
+    //   this.error = res.msg;
+    //   return;
+    // }
+    if (this.userName.value == "Admin" && this.password.value == "000000") {
+      const user = {
+        avatar: "./assets/tmp/img/avatar.jpg",
+        email: "cipchk@qq.com",
+        name: "Admin",
+        token: '00000000000000000000'
+      }
+      // 清空路由复用信息
+      this.reuseTabService.clear();
+      // 设置用户Token信息
+      this.tokenService.set(user);
+      // 重新获取 StartupService 内容，我们始终认为应用信息一般都会受当前用户授权范围而影响
+      this.startupSrv.load().then(() => {
+        let url = this.tokenService.referrer!.url || '/home';
+        if (url.includes('/passport')) {
+          url = '/home';
         }
-        // 清空路由复用信息
-        this.reuseTabService.clear();
-        // 设置用户Token信息
-        this.tokenService.set(res.user);
-        // 重新获取 StartupService 内容，我们始终认为应用信息一般都会受当前用户授权范围而影响
-        this.startupSrv.load().then(() => {
-          let url = this.tokenService.referrer!.url || '/home';
-          if (url.includes('/passport')) {
-            url = '/home';
-          }
-          this.router.navigateByUrl(url);
-        });
+        this.router.navigateByUrl(url);
+        // this.msg.success(`登录成功!欢迎您 ${this.userName.value}`)
+        this.notify.success('登录成功!', `欢迎您 ${this.userName.value}`, { nzDuration: 1000 })
       });
+
+    } else {
+      // this.error = '账号密码错误!';
+      this.notify.error('登录失败', '请检查账号密码', { nzDuration: 1000 })
+    }
+
+    // });
   }
 
   // #region social

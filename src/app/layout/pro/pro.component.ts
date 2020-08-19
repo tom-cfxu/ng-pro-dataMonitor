@@ -29,6 +29,21 @@ import { BrandService } from './pro.service';
 @Component({
   selector: 'layout-pro',
   templateUrl: './pro.component.html',
+  styles: [`
+    .layout-timer{
+      position:absolute;
+      top:15px;
+      right:120px;
+      height:50px;
+      z-index:1000;
+      transition:left 0.1s linear
+    }
+    @media(max-width:1100px){
+      .layout-timer{
+        display:none;
+      }
+    }
+  `]
   // NOTICE: If all pages using OnPush mode, you can turn it on and all `cdr.detectChanges()` codes
   // changeDetection: ChangeDetectionStrategy.OnPush
 })

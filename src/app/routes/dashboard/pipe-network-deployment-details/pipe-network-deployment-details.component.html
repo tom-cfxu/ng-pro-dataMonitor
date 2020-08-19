@@ -1,0 +1,28 @@
+<nz-card style="height:85vh" [nzBordered]="false" [nzTitle]="'管网部署详情'">
+    <button nz-button nzType="primary" (click)="addTreeNode()">添加节点</button>
+    <div id="tree-container" class="tree-container">
+        <div class="tree-node">
+            <div class="tree-body" *ngFor="let item of treeData;let i = index" style="margin: 10px;">
+                <div class="div-box root" (contextmenu)="addchildNode(item.id)">
+                    {{item.name}}
+                    <i class="root-line"></i>
+                </div>
+                <ng-container *ngTemplateOutlet="tree;context:{item_:item,index_:i}"></ng-container>
+            </div>
+        </div>
+    </div>
+
+</nz-card>
+<ng-template #tree let-item="item_">
+    <ul *ngIf="item.children" class="tree-child">
+        <li class="tree-body" *ngFor="let list of item.children;let i = index">
+            <div class="div-box child" (contextmenu)="addchildNode(list.id)">
+                {{list.name}}
+            </div>
+            <ng-container *ngTemplateOutlet="tree;context:{item_:list}"></ng-container>
+        </li>
+    </ul>
+</ng-template>
+<ng-template>
+
+</ng-template>

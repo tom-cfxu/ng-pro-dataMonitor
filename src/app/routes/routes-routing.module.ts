@@ -6,8 +6,7 @@ import { LayoutProComponent } from '@brand';
 import { LayoutPassportComponent } from '../layout/passport/passport.component';
 // dashboard pages
 // import { DashboardAnalysisComponent } from './dashboard/analysis/analysis.component';
-import { DashboardMonitorComponent } from './dashboard/monitor/monitor.component';
-import { DashboardWorkplaceComponent } from './dashboard/workplace/workplace.component';
+
 // import { DashboardDDComponent } from './dashboard/dd/dd.component';
 // import { DashboardRealtimeDataMonitorComponent } from './dashboard/realtime-data-monitor/realtime-data-monitor.component';
 // passport pages

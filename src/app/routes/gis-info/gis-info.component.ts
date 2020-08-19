@@ -40,8 +40,23 @@ export class GisInfoComponent implements OnInit {
     },
     {
       fid: 4,
-      use: 36.23,
-      leak: 5.23
+      use: 132.23,
+      leak: 6.23
+    },
+    {
+      fid: 5,
+      use: 135.23,
+      leak: 3.32
+    },
+    {
+      fid: 6,
+      use: 136.23,
+      leak: 1.23
+    },
+    {
+      fid: 7,
+      use: 138.23,
+      leak: 1.23
     },
   ]
   option1 = {

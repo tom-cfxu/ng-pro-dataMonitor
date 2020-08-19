@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AnalysisComponent } from './analysis/analysis.component';
 import { RealtimeDataMonitorComponent } from './realtime-data-monitor/realtime-data-monitor.component';
 import { DistrictWaterUsageDetailsComponent } from './district-water-usage-details/district-water-usage-details.component';
-import { OfficialWebsiteDeploymentDetailsComponent } from './official-website-deployment-details/official-website-deployment-details.component';
+import { PipeNetworkDeploymentDetailsComponent } from './pipe-network-deployment-details/pipe-network-deployment-details.component';
 
 const routes: Routes = [
   {
@@ -24,8 +24,8 @@ const routes: Routes = [
     component: DistrictWaterUsageDetailsComponent
   },
   {
-    path: 'official-website-deployment-details',
-    component: OfficialWebsiteDeploymentDetailsComponent
+    path: 'pipe-network-deployment-details',
+    component: PipeNetworkDeploymentDetailsComponent
   },
 ];
 

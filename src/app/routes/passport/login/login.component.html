@@ -5,14 +5,14 @@
       <nz-form-item>
         <nz-form-control nzErrorTip="请输入账号!">
           <nz-input-group nzSize="large" nzPrefixIcon="user">
-            <input nz-input formControlName="userName" placeholder="username: admin or user" />
+            <input nz-input formControlName="userName" placeholder="请输入: admin" />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-control nzErrorTip="请输入密码!">
           <nz-input-group nzSize="large" nzPrefixIcon="lock">
-            <input nz-input type="password" formControlName="password" placeholder="password: ng-alain.com" />
+            <input nz-input type="password" formControlName="password" placeholder="请输入: 000000" />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
@@ -52,14 +52,14 @@
       </nz-form-item>
     </nz-tab> -->
   </nz-tabset>
-  <nz-form-item>
+  <!-- <nz-form-item>
     <nz-col [nzSpan]="12">
       <label nz-checkbox formControlName="remember">自动登录</label>
     </nz-col>
     <nz-col [nzSpan]="12" class="text-right">
       <a class="forgot" (click)="msg.error('该功能未实现')">忘记密码</a>
     </nz-col>
-  </nz-form-item>
+  </nz-form-item> -->
   <nz-form-item>
     <button nz-button type="submit" nzType="primary" nzSize="large" [nzLoading]="http.loading" nzBlock>
       登录
@@ -72,5 +72,5 @@
     class="icon"></i>
   <i nz-tooltip="in fact Github via redirect" (click)="open('github')" nz-icon nzType="taobao-circle" class="icon"></i>
   <i (click)="open('weibo', 'window')" nz-icon nzType="weibo-circle" class="icon"></i> -->
-  <a class="register" routerLink="/passport/register">注册账号</a>
+  <!-- <a class="register" routerLink="/passport/register">注册账号</a> -->
 </div>
