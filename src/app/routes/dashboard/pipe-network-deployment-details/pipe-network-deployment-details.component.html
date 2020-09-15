@@ -1,19 +1,33 @@
-<nz-card style="height:85vh" [nzBordered]="false" [nzTitle]="'管网部署详情'">
-    <button nz-button nzType="primary" (click)="addTreeNode()">添加节点</button>
-    <div id="tree-container" class="tree-container">
-        <div class="tree-node">
-            <div class="tree-body" *ngFor="let item of treeData;let i = index" style="margin: 10px;">
-                <div class="div-box root" (contextmenu)="addchildNode(item.id)">
-                    {{item.name}}
-                    <i class="root-line"></i>
-                </div>
-                <ng-container *ngTemplateOutlet="tree;context:{item_:item,index_:i}"></ng-container>
-            </div>
-        </div>
-    </div>
+<div nz-row [nzGutter]="24" height="90vh">
+    <nz-card style="height:100vh" [nzBordered]="false" class="imgs">
 
-</nz-card>
-<ng-template #tree let-item="item_">
+    </nz-card>
+    <!-- <div nz-col nzXs="24" nzSm="12" nzMd="12" nzLg="8">
+        <nz-card style="height:100vh" [nzBordered]="false">
+            <nz-tree [nzData]="nodes">
+
+            </nz-tree>
+        </nz-card>
+    </div>
+    <div nz-col nzXs="24" nzSm="12" nzMd="12" nzLg="16">
+        <div nz-row nzXs="24">
+            <nz-card style="height:50vh" [nzBordered]="false">
+
+
+            </nz-card>
+        </div>
+        <div nz-row nzXs="24">
+            <nz-card style="height:50vh" [nzBordered]="false">
+
+
+            </nz-card>
+        </div>
+
+    </div> -->
+
+</div>
+
+<!-- <ng-template #tree let-item="item_">
     <ul *ngIf="item.children" class="tree-child">
         <li class="tree-body" *ngFor="let list of item.children;let i = index">
             <div class="div-box child" (contextmenu)="addchildNode(list.id)">
@@ -22,7 +36,16 @@
             <ng-container *ngTemplateOutlet="tree;context:{item_:list}"></ng-container>
         </li>
     </ul>
-</ng-template>
-<ng-template>
-
-</ng-template>
+</ng-template> -->
+<!-- <button nz-button nzType="primary" (click)="addTreeNode()">添加节点</button>
+        <div id="tree-container" class="tree-container">
+            <div class="tree-node">
+                <div class="tree-body" *ngFor="let item of treeData;let i = index" style="margin: 10px;">
+                    <div class="div-box root" (contextmenu)="addchildNode(item.id)">
+                        {{item.name}}
+                        <i class="root-line"></i>
+                    </div>
+                    <ng-container *ngTemplateOutlet="tree;context:{item_:item,index_:i}"></ng-container>
+                </div>
+            </div>
+        </div> -->

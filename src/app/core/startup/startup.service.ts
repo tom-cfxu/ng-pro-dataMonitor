@@ -85,12 +85,12 @@ export class StartupService {
                         "reuse": true,
                         // "i18n": "menu.dashboard.realdatamonitor"
                       },
-                      {
-                        "text": "分区用水详情",
-                        "link": "/home/dashboard/district-water-usage-details",
-                        "reuse": true,
-                        // "i18n": "menu.dashboard.realdatamonitor"
-                      },
+                      // {
+                      //   "text": "分区用水详情",
+                      //   "link": "/home/dashboard/district-water-usage-details",
+                      //   "reuse": true,
+                      //   // "i18n": "menu.dashboard.realdatamonitor"
+                      // },
                       {
                         "text": "管网部署详情",
                         "link": "/home/dashboard/pipe-network-deployment-details",
@@ -107,42 +107,42 @@ export class StartupService {
                     "link": "/home/leakage-analysis",
                     // "children": []
                   },
-                  {
-                    "text": "运维管理",
-                    "icon": "anticon anticon-setting",
-                    "shortcutRoot": true,
-                    "reuse": true,
-                    "children": [
-                      {
-                        "text": "监测工单派发",
-                        "link": "/home/operation-management/monitor-work-order-dispatch",
-                        "reuse": true,
-                        // "i18n": "menu.dashboard.realdatamonitor"
-                      },
-                      {
-                        "text": "检修进度详情",
-                        "link": "/home/operation-management/overhaul-progress-details",
-                        "reuse": true,
-                        // "i18n": "menu.dashboard.realdatamonitor"
-                      },
-                    ]
-                  },
-                  {
-                    "text": "历史数据",
-                    "icon": "anticon anticon-history",
-                    "shortcutRoot": true,
-                    "reuse": true,
-                    "link": "/home/history-data",
-                    // "children": []
-                  },
-                  {
-                    "text": "GIS地理信息",
-                    "icon": "anticon anticon-environment",
-                    "shortcutRoot": true,
-                    "reuse": true,
-                    "link": "/home/gis-info",
-                    // "children": []
-                  },
+                  // {
+                  //   "text": "运维管理",
+                  //   "icon": "anticon anticon-setting",
+                  //   "shortcutRoot": true,
+                  //   "reuse": true,
+                  //   "children": [
+                  //     {
+                  //       "text": "监测工单派发",
+                  //       "link": "/home/operation-management/monitor-work-order-dispatch",
+                  //       "reuse": true,
+                  //       // "i18n": "menu.dashboard.realdatamonitor"
+                  //     },
+                  //     {
+                  //       "text": "检修进度详情",
+                  //       "link": "/home/operation-management/overhaul-progress-details",
+                  //       "reuse": true,
+                  //       // "i18n": "menu.dashboard.realdatamonitor"
+                  //     },
+                  //   ]
+                  // },
+                  // {
+                  //   "text": "历史查询",
+                  //   "icon": "anticon anticon-history",
+                  //   "shortcutRoot": true,
+                  //   "reuse": true,
+                  //   "link": "/home/history-data",
+                  //   // "children": []
+                  // },
+                  // {
+                  //   "text": "GIS地理信息",
+                  //   "icon": "anticon anticon-environment",
+                  //   "shortcutRoot": true,
+                  //   "reuse": true,
+                  //   "link": "/home/gis-info",
+                  //   // "children": []
+                  // },
                 ]
               }
             ]);

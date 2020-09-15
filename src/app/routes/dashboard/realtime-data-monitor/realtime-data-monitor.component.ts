@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild, TemplateRef, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { _HttpClient } from '@delon/theme';
-import { tap, map } from 'rxjs/operators';
+// import { tap, map } from 'rxjs/operators';
 import { STComponent, STColumn, STData, STChange } from '@delon/abc';
 import { HttpService } from '@core/services/http.service';
-import { resolve } from 'url';
+// import { resolve } from 'url';
 
 //js重复某个字符串n次
 const repeat = (str, n) => new Array(n + 1).join(str);
@@ -19,20 +19,25 @@ const dateFormat = (date: string) => `20${date.slice(0, 2)}-${date.slice(2, 4)}-
 
 //返回对象
 const statusObject = (statusText, statusType, status) => { return { statusText, statusType, status, statusBin: decToBin(status) } }
-let timer = null;
+
 @Component({
   selector: 'app-realtime-data-monitor',
   templateUrl: './realtime-data-monitor.component.html',
   styleUrls: ['./realtime-data-monitor.component.less']
 })
-export class RealtimeDataMonitorComponent implements OnInit {
+export class RealtimeDataMonitorComponent implements OnInit, OnDestroy {
+  private timer;
   constructor(
     private http: _HttpClient,
     public msg: NzMessageService,
-    private modalSrv: NzModalService,
-    private cdr: ChangeDetectorRef,
+    // private modalSrv: NzModalService,
+    // private cdr: ChangeDetectorRef,
     private httpService: HttpService
-  ) { }
+  ) {
+    this.timer = setInterval(() => {
+      this.searchMode ? this.filterData() : this.getData();
+    }, 2000)
+  }
 
   q: any = {
     pi: 1,
@@ -87,44 +92,6 @@ export class RealtimeDataMonitorComponent implements OnInit {
     { title: '瞬时流量(m³/h)', index: 'instantFlow', width: 20, sorter: (a: any, b: any) => a.instantFlow - b.instantFlow, },
     { title: '压力(N)', index: 'pressure', width: 20 },
     { title: '温度(℃)', index: 'temperature', width: 20 },
-    // { title: 'CRC校验码', index: 'instantFlow' },
-    // {
-    //   title: '瞬时流量(m³/h)',
-    //   index: 'callNo',
-    //   type: 'number',
-    //   format: (item: any) => `${item.callNo} 万`,
-
-    // },
-    // {
-    //   title: '状态',
-    //   index: 'status',
-    //   render: 'status',
-    //   filter: {
-    //     menus: this.status,
-    //     fn: (filter: any, record: any) => record.status === filter.index,
-    //   },
-    // },
-    // {
-    //   title: '最后采集时间',
-    //   index: 'updatedAt',
-    //   type: 'date',
-    //   sort: {
-    //     compare: (a: any, b: any) => a.updatedAt - b.updatedAt,
-    //   },
-    // },
-    // {
-    //   title: '操作',
-    //   buttons: [
-    //     {
-    //       text: '配置',
-    //       click: (item: any) => this.msg.success(`配置${item.no}`),
-    //     },
-    //     {
-    //       text: '订阅警报',
-    //       click: (item: any) => this.msg.success(`订阅警报${item.no}`),
-    //     },
-    //   ],
-    // },
   ];
   selectedRows: STData[] = [];
   description = '';
@@ -199,19 +166,17 @@ export class RealtimeDataMonitorComponent implements OnInit {
   }
   ngOnInit() {
     this.getData();
-    timer = setInterval(() => {
-      this.searchMode ? this.filterData() : this.getData();
-    }, 6000)
+
   }
   ngOnDestroy() {
-    clearInterval(timer);
+    clearInterval(this.timer);
   }
   //获取原数据加工
   getTableData(): Promise<any> {
     return new Promise((resolve, reject) => {
       this.http.get(this.httpService.api.getRDB).subscribe((res: any) => {
         const data = res.data;
-
+        
         data.forEach((e, i) => {
           //处理设备状态 
           e.id = i + 1;

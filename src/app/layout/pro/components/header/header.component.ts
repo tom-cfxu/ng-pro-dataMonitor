@@ -21,6 +21,8 @@ import { BrandService } from '../../pro.service';
     position:absolute;
     top:0;
     left:80px;
+    font-weight:bold;
+    font-family:微软雅黑
   }
   @media(max-width:840px){
       h2.company-name{
