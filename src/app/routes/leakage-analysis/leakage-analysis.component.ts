@@ -2,7 +2,6 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { G2TimelineData } from '@delon/chart';
 import { STColumn, STPage } from '@delon/abc';
 import { getTimeDistance } from '@delon/util';
-
 //随机数
 let timer;
 const r = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1) + min);
@@ -80,252 +79,13 @@ export class LeakageAnalysisComponent implements OnInit {
   //日期选择器
   date_range: Date[] = [];
   //用水量
-
-  //漏损率仪表盘
-  option1 = {
-    backgroundColor: '#fff',
-    tooltip: {
-      formatter: '{a} <br/>{c}%'
-    },
-    grid: {
-      left: "5%",
-      top: "5%",
-      bottom: "5%",
-      right: "5%"
-    },
-    toolbox: TOOLBOX,
-    series: [
-      {
-        name: '漏损率(%)',
-        type: 'gauge',
-        min: 0,
-        max: 100,
-        // splitNumber: 11,
-        radius: '100%',
-        color1: [[0.2, '#13c2c2'], [0.8, '#58afff'], [1, '#f47e92']],
-        axisLine: {            // 坐标轴线
-          lineStyle: {       // 属性lineStyle控制线条样式
-            color: [[0.2, '#13c2c2'], [0.8, '#58afff'], [1, '#f47e92']],
-            width: 5,
-            shadowColor: '#fff', //默认透明
-            shadowBlur: 10
-          }
-        },
-        axisLabel: {            // 坐标轴小标记
-          fontWeight: 'bolder',
-          color: '#333',
-          shadowColor: '#fff', //默认透明
-          shadowBlur: 10
-        },
-        axisTick: {            // 坐标轴小标记
-          length: 15,        // 属性length控制线长
-          lineStyle: {       // 属性lineStyle控制线条样式
-            color: 'auto',
-            shadowColor: '#fff', //默认透明
-            shadowBlur: 10
-          }
-        },
-        splitLine: {           // 分隔线
-          length: 25,         // 属性length控制线长
-          lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
-            width: 1,
-            color: [[0.2, '#13c2c2'], [0.8, '#58afff'], [1, '#f94141']],
-            shadowColor: '#fff', //默认透明
-            shadowBlur: 10,
-            z: 1
-          }
-        },
-        pointer: {           // 分隔线
-          shadowColor: '#fff', //默认透明
-          shadowBlur: 5
-        },
-        title: {
-          show: false,
-          textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-            fontWeight: 'bolder',
-            fontSize: 20,
-            // fontStyle: 'italic',
-            color: '#333',
-            shadowColor: '#fff', //默认透明
-            shadowBlur: 10
-          }
-        },
-        detail: {
-          backgroundColor: '#58afff',
-          borderWidth: 0,
-          // borderColor: '#fff',
-          borderRadius: 4,
-          shadowColor: '#fff', //默认透明
-          shadowBlur: 5,
-          lineHeight: 30,
-          fontSize: 30,
-          formatter: (value) => value.toFixed(0) + "%",
-          // offsetCenter: [0, '55%'],       // x, y，单位px
-          textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-            fontWeight: 'bolder',
-            color: '#fff'
-          }
-        },
-        data: [{ value: 40, name: "漏损率(%)" }]
-      },
-    ]
-  };
-  //用水漏水量饼图
-  option2 = {
-    color: ['#ff5500', '#58afff'],
-    tooltip: {
-      trigger: 'item',
-      formatter: '{a} <br/>{b}: {c}吨 ({d}%)',
-    },
-    toolbox: TOOLBOX,
-    legend: {
-      orient: 'vertical',
-      left: 10,
-      data: ['漏水量', '用水量'],
-    },
-    series: [
-      {
-        name: '用水漏水量',
-        type: 'pie',
-        selectedMode: 'single',
-        radius: [0, '80%'],
-        label: {
-          position: 'inner',
-          formatter: '{b}\n\n{d}%',
-          fontSize: 15,
-          borderWidth: 0
-        },
-        labelLine: {
-          show: true
-        },
-
-        data: [
-          { value: 1, name: '漏水量', selected: true },
-          { value: 8, name: '用水量' },
-        ]
-      },
-    ]
-  };
-  //用水统计
-  option3 = {
-    color: ["#8ccfec", "#facd91"],
-    tooltip: {
-      trigger: 'axis',
-      formatter: '{a}<br/>{b}: {c} 吨'
-    },
-    toolbox: TOOLBOX,
-    grid: {
-      tooltip: {
-        show: true
-      },
-      left: "15%",
-      top: "15%",
-      right: "5%",
-      bottom: "10%",
-      // show: true
-    },
-    xAxis: {
-      type: 'category',
-      boundaryGap: false,
-      data: ['05月', '06月', '07月'],
-      axisTick: {
-        show: false
-      },
-      axisLabel: {
-        color: "#aaa"
-      },
-
-      axisLine: {
-        lineStyle: {
-          color: "#aaa"
-        }
-      },
-
-    },
-    yAxis: {
-      type: 'value',
-      axisLabel: {
-        color: "#aaa"
-      },
-      axisLine: {
-        // show: false,
-        lineStyle: {
-          color: "#aaa"
-        }
-      },
-      axisTick: {
-        show: false
-      },
-    },
-    series: [{
-      name: '用水量',
-      data: [820, 932, 901,],
-      type: 'line',
-      smooth: true,
-      areaStyle: {}
-    }]
-  };
-  //漏损统计
-  option4 = {
-    color: ["#facd91"],
-    tooltip: {
-      trigger: 'axis',
-      formatter: '{a}<br/>{b}: {c} 吨'
-    },
-    grid: {
-      tooltip: {
-        show: true
-      },
-      left: "15%",
-      top: "15%",
-      right: "5%",
-      bottom: "10%",
-      // show: true
-    },
-    toolbox: TOOLBOX,
-    xAxis: {
-      type: 'category',
-      boundaryGap: false,
-      data: ['05月', '06月', '07月'],
-      axisTick: {
-        show: false
-      },
-      axisLabel: {
-        color: "#aaa"
-      },
-
-      axisLine: {
-        lineStyle: {
-          color: "#aaa"
-        }
-      },
-
-    },
-    yAxis: {
-      type: 'value',
-      axisLabel: {
-        color: "#aaa"
-      },
-      axisLine: {
-        // show: false,
-        lineStyle: {
-          color: "#aaa"
-        }
-      },
-      axisTick: {
-        show: false
-      },
-    },
-    series: [{
-      name: '漏损量',
-      data: [120, 200, 100,],
-      type: 'line',
-      smooth: true,
-      areaStyle: {}
-    }]
-  }
+  option1: any;
+  option2: any;
+  option3: any;
+  option4: any;
   //实时趋势
   chartData: G2TimelineData[] = [];
+  echartsIntance: any;
   //按日期查找数据按钮
   search() {
     let start = this.date_range[0];
@@ -338,8 +98,253 @@ export class LeakageAnalysisComponent implements OnInit {
   handleClick(e) {
     console.log(e);
   }
-  //随机数
 
+  //图表初始化
+  chartInit() {
+    //漏损率仪表盘
+    this.option1 = {
+      backgroundColor: '#fff',
+      tooltip: {
+        formatter: '{a} <br/>{c}%'
+      },
+      grid: {
+        left: "5%",
+        top: "5%",
+        bottom: "5%",
+        right: "5%"
+      },
+      toolbox: TOOLBOX,
+      series: [
+        {
+          name: '漏损率(%)',
+          type: 'gauge',
+          min: 0,
+          max: 100,
+          // splitNumber: 11,
+          radius: '100%',
+          color1: [[0.2, '#13c2c2'], [0.8, '#58afff'], [1, '#f47e92']],
+          axisLine: {            // 坐标轴线
+            lineStyle: {       // 属性lineStyle控制线条样式
+              color: [[0.2, '#13c2c2'], [0.8, '#58afff'], [1, '#f47e92']],
+              width: 5,
+              shadowColor: '#fff', //默认透明
+              shadowBlur: 10
+            }
+          },
+          axisLabel: {            // 坐标轴小标记
+            fontWeight: 'bolder',
+            color: '#333',
+            shadowColor: '#fff', //默认透明
+            shadowBlur: 10
+          },
+          axisTick: {            // 坐标轴小标记
+            length: 15,        // 属性length控制线长
+            lineStyle: {       // 属性lineStyle控制线条样式
+              color: 'auto',
+              shadowColor: '#fff', //默认透明
+              shadowBlur: 10
+            }
+          },
+          splitLine: {           // 分隔线
+            length: 25,         // 属性length控制线长
+            lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+              width: 1,
+              color: "[[0.2, '#13c2c2'], [0.8, '#58afff'], [1, '#f94141']]",
+              shadowColor: '#fff', //默认透明
+              shadowBlur: 10,
+              z: 1
+            }
+          },
+          pointer: {           // 分隔线
+            shadowColor: '#fff', //默认透明
+            shadowBlur: 5
+          },
+          title: {
+            show: false,
+            textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+              fontWeight: 'bolder',
+              fontSize: 20,
+              // fontStyle: 'italic',
+              color: '#333',
+              shadowColor: '#fff', //默认透明
+              shadowBlur: 10
+            }
+          },
+          detail: {
+            backgroundColor: '#58afff',
+            borderWidth: 0,
+            // borderColor: '#fff',
+            borderRadius: 4,
+            shadowColor: '#fff', //默认透明
+            shadowBlur: 5,
+            lineHeight: 30,
+            fontSize: 30,
+            formatter: (value) => value.toFixed(0) + "%",
+            // offsetCenter: [0, '55%'],       // x, y，单位px
+            textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+              fontWeight: 'bolder',
+              color: '#fff'
+            }
+          },
+          data: [{ value: 40, name: "漏损率(%)" }]
+        },
+      ]
+    };
+    //用水漏水量饼图
+    this.option2 = {
+      color: ['#ff5500', '#58afff'],
+      tooltip: {
+        trigger: 'item',
+        formatter: '{a} <br/>{b}: {c}吨 ({d}%)',
+      },
+      toolbox: TOOLBOX,
+      legend: {
+        orient: 'vertical',
+        left: 10,
+        data: ['漏水量', '用水量'],
+      },
+      series: [
+        {
+          name: '用水漏水量',
+          type: 'pie',
+          selectedMode: 'single',
+          radius: [0, '80%'],
+          label: {
+            position: 'inner',
+            formatter: '{b}\n\n{d}%',
+            fontSize: 15,
+            borderWidth: 0
+          },
+          labelLine: {
+            show: true
+          },
+
+          data: [
+            { value: 1, name: '漏水量', selected: true },
+            { value: 8, name: '用水量' },
+          ]
+        },
+      ]
+    };
+    //用水统计
+    this.option3 = {
+      color: ["#8ccfec", "#facd91"],
+      tooltip: {
+        trigger: 'axis',
+        formatter: '{a}<br/>{b}: {c} 吨'
+      },
+      toolbox: TOOLBOX,
+      grid: {
+        tooltip: {
+          show: true
+        },
+        left: "15%",
+        top: "15%",
+        right: "5%",
+        bottom: "10%",
+        // show: true
+      },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: ['05月', '06月', '07月'],
+        axisTick: {
+          show: false
+        },
+        axisLabel: {
+          color: "#aaa"
+        },
+
+        axisLine: {
+          lineStyle: {
+            color: "#aaa"
+          }
+        },
+
+      },
+      yAxis: {
+        type: 'value',
+        axisLabel: {
+          color: "#aaa"
+        },
+        axisLine: {
+          // show: false,
+          lineStyle: {
+            color: "#aaa"
+          }
+        },
+        axisTick: {
+          show: false
+        },
+      },
+      series: [{
+        name: '用水量',
+        data: [820, 932, 901,],
+        type: 'line',
+        smooth: true,
+        areaStyle: {}
+      }]
+    };
+    //漏损统计
+    this.option4 = {
+      color: ["#facd91"],
+      tooltip: {
+        trigger: 'axis',
+        formatter: '{a}<br/>{b}: {c} 吨'
+      },
+      grid: {
+        tooltip: {
+          show: true
+        },
+        left: "15%",
+        top: "15%",
+        right: "5%",
+        bottom: "10%",
+        // show: true
+      },
+      toolbox: TOOLBOX,
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: ['05月', '06月', '07月'],
+        axisTick: {
+          show: false
+        },
+        axisLabel: {
+          color: "#aaa"
+        },
+
+        axisLine: {
+          lineStyle: {
+            color: "#aaa"
+          }
+        },
+
+      },
+      yAxis: {
+        type: 'value',
+        axisLabel: {
+          color: "#aaa"
+        },
+        axisLine: {
+          // show: false,
+          lineStyle: {
+            color: "#aaa"
+          }
+        },
+        axisTick: {
+          show: false
+        },
+      },
+      series: [{
+        name: '漏损量',
+        data: [120, 200, 100,],
+        type: 'line',
+        smooth: true,
+        areaStyle: {}
+      }]
+    }
+  }
   //设置日期事件
   setDate() {
     // console.log(this.dateValue);
@@ -411,6 +416,7 @@ export class LeakageAnalysisComponent implements OnInit {
     }
   }
   ngOnInit() {
+    this.chartInit();
     this.randomDate(120, 6500, 1400)
     this.chartData = Array(10).fill({}).map((data: any, i: number) => {
       return {
@@ -422,8 +428,6 @@ export class LeakageAnalysisComponent implements OnInit {
     //定时生成数据
     timer = setInterval(() => {
       //漏损率
-      // this.option1.series[0].data = [{ value: r(0, 100), name: "漏损率(%)" }];
-      // this.option1 = { ...this.option1 };
       this.chartData.shift();
       this.chartData.push({
         x: new Date().getTime(),
@@ -431,12 +435,7 @@ export class LeakageAnalysisComponent implements OnInit {
         y2: Math.floor(Math.random() * 100) + 10,
       })
       this.chartData = [...this.chartData];
-      // console.log(this.chartData);
-      // console.log(new Date().getTime() + 1000 * 60 * 30)
-      //
     }, 2000)
-    // this.option1.series[0].data = [{ value: 30, name: "漏损率(%)" }];
-    // console.log(this.chartData);
 
   }
   ngDestory() {

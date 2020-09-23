@@ -54,7 +54,7 @@ export class ProAccountSettingsComponent implements AfterViewInit, OnDestroy {
   }
 
   to(item: any) {
-    this.router.navigateByUrl(`/pro/account/settings/${item.key}`);
+    this.router.navigateByUrl(`home/pro/account/settings/${item.key}`);
   }
 
   private resize() {

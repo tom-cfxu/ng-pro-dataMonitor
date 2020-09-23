@@ -20,7 +20,7 @@ import { zip, Subscription } from 'rxjs';
 })
 export class ProAccountCenterComponent implements OnInit, OnDestroy {
 
-  constructor(private router: Router, private http: _HttpClient, private cdr: ChangeDetectorRef) {}
+  constructor(private router: Router, private http: _HttpClient, private cdr: ChangeDetectorRef) { }
   private router$: Subscription;
   user: any;
   notice: any;
@@ -63,7 +63,7 @@ export class ProAccountCenterComponent implements OnInit, OnDestroy {
   }
 
   to(item: any) {
-    this.router.navigateByUrl(`/pro/account/center/${item.key}`);
+    this.router.navigateByUrl(`/home/pro/account/center/${item.key}`);
   }
   tagShowIpt() {
     this.taging = true;

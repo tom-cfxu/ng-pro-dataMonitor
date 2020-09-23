@@ -41,6 +41,7 @@ import { MouseFocusDirective } from './components/mouse-focus/mouse-focus.direct
 import { QUICK_CHAT_COMPONENTS } from './components/quick-chat';
 import { AddressComponent } from './components/address/address.component';
 import { ZmNotifyComponent } from './components/zm-notify/zm-notify.component';
+import { ZmPumpComponent } from './components/zm-pump/zm-pump.component';
 
 const COMPONENTS_ENTRY = [
   LangsComponent,
@@ -49,6 +50,7 @@ const COMPONENTS_ENTRY = [
   StatusLabelComponent,
   AddressComponent,
   ZmNotifyComponent,
+  ZmPumpComponent,
   ...QUICK_CHAT_COMPONENTS
 ];
 const COMPONENTS = [
@@ -84,6 +86,7 @@ const DIRECTIVES = [
     ...COMPONENTS,
     ...DIRECTIVES,
     ZmNotifyComponent,
+    ZmPumpComponent,
   ],
   entryComponents: COMPONENTS_ENTRY,
   exports: [

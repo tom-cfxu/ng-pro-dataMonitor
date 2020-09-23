@@ -1,29 +1,116 @@
 <div nz-row [nzGutter]="24" height="90vh">
-    <nz-card style="height:100vh" [nzBordered]="false" class="imgs">
+    <!-- <nz-card style="height:100vh" [nzBordered]="false" class="imgs">
 
-    </nz-card>
-    <!-- <div nz-col nzXs="24" nzSm="12" nzMd="12" nzLg="8">
-        <nz-card style="height:100vh" [nzBordered]="false">
-            <nz-tree [nzData]="nodes">
+    </nz-card> -->
+    <div nz-col nzXs="24" nzSm="12" nzMd="12" nzLg="8">
+        <nz-card [nzBordered]="false">
+            <nz-tree [nzData]="nodes" (nzClick)="nodeTreeClick($event)">
 
             </nz-tree>
+
         </nz-card>
     </div>
     <div nz-col nzXs="24" nzSm="12" nzMd="12" nzLg="16">
         <div nz-row nzXs="24">
-            <nz-card style="height:50vh" [nzBordered]="false">
+            <nz-card style="min-height:40vh" [nzBordered]="false">
+                <h3>设备详情</h3>
+                <div nz-row>
+                    <div nz-col nzXs="16" class="pipe-left">
+                        <div class="device-detail">
+
+                            <sv-container>
+                                <sv label="设备位置" type="default">{{tmpNode.title}}</sv>
+                            </sv-container>
+                            <sv-container>
+                                <sv label="设备型号" type="default">{{tmpNode.deviceType}}</sv>
+                            </sv-container>
+                            <sv-container>
+                                <sv label="上级水表" type="default">{{tmpParentNode.title}}</sv>
+                            </sv-container>
+                            <sv-container>
+                                <sv label="下级水表" type="default">
+                                    <div *ngFor="let item of tmpChildrenNode let i=index">
+                                        <div>{{item.title}}</div>
+                                    </div>
+                                </sv>
+                            </sv-container>
+                            <div style="height: 10px;"></div>
+                            <sv-container>
+                                <sv label="管网状态" type="default">
+                                    <!-- <nz-badge nzColor="red" nzText="报警"></nz-badge> -->
+                                    <nz-badge nzColor="green" nzText="正常"></nz-badge>
+                                </sv>
+                            </sv-container>
+                        </div>
+                        <div class="pipe-info">
+                            <div class="device-parent">
+                                <app-zm-pump [title]="tmpParentNode.title" [isHasChildren]="true" [isHasParent]="false">
+                                </app-zm-pump>
+                            </div>
+                            <div class="device-node">
+                                <app-zm-pump [title]="tmpNode.title" [isHasChildren]="tmpChildrenNode.length>0"
+                                    [isHasParent]="true">
+                                </app-zm-pump>
+                            </div>
+                            <div class="pipe-info-foot" *ngIf="tmpChildrenNode.length>1">
+                                <img src="../../../../assets/pump_02.png" alt="">
+                            </div>
+                            <div *ngIf="tmpChildrenNode.length==1" class="pipe-one-children">
+                                <app-zm-pump [title]="tmpChildrenNode[0].title" [isHasChildren]="false"
+                                    [isHasParent]="true">
+                                </app-zm-pump>
+                            </div>
+                        </div>
+                    </div>
+                    <div nz-col nzXs="8" class="pipe-right">
+                        <div class="height-pipe">
+
+                            <div *ngIf="tmpChildrenNode.length!=1" class="pipe-children">
+                                <div class="pipe-children-each" *ngFor="let item of tmpChildrenNode let i=index">
+                                    <div class="pipe-children-each1">
+                                        <app-zm-pump [title]="item.title" [isHasChildren]="false" [isHasParent]="true">
+                                        </app-zm-pump>
+                                        <div *ngIf="tmpChildrenNode.length-1>i" class="pipe-foot">
+                                            <img class="pipe-v" src="../../../../assets/pump_03.png" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+
 
 
             </nz-card>
         </div>
         <div nz-row nzXs="24">
-            <nz-card style="height:50vh" [nzBordered]="false">
+            <nz-card style="min-height:50vh" [nzBordered]="false">
+                <div *ngIf="isAlarm">
+                    <h3 style="display: flex;align-items: center;"><i nz-icon style="color:red;font-size:30px;"
+                            nzType="exclamation-circle" nzTheme="fill"></i><span
+                            style="display: inline-block;width: 10px;"></span>{{alarmMsg}}
+                    </h3>
+                </div>
 
+                <div nz-row nzXs="24">
+                    <div nz-col nzXs="16">
+                        <st [data]="pipeData" [columns]="columns"></st>
+                    </div>
+                    <div nz-col nzXs="8">
+                        <st [data]="leakData" [page]="leakRatePage" [columns]="leakRateColumns"></st>
+                    </div>
+                </div>
 
             </nz-card>
         </div>
 
-    </div> -->
+    </div>
 
 </div>
 

@@ -63,21 +63,21 @@ const routes: Routes = [
         component: UserLoginComponent,
         data: { title: '登录', titleI18n: 'app.login.login' },
       },
-      {
-        path: 'register',
-        component: UserRegisterComponent,
-        data: { title: '注册', titleI18n: 'app.register.register' },
-      },
-      {
-        path: 'register-result',
-        component: UserRegisterResultComponent,
-        data: { title: '注册结果', titleI18n: 'app.register.register' },
-      },
-      {
-        path: 'lock',
-        component: UserLockComponent,
-        data: { title: '锁屏', titleI18n: 'app.lock' },
-      },
+      // {
+      //   path: 'register',
+      //   component: UserRegisterComponent,
+      //   data: { title: '注册', titleI18n: 'app.register.register' },
+      // },
+      // {
+      //   path: 'register-result',
+      //   component: UserRegisterResultComponent,
+      //   data: { title: '注册结果', titleI18n: 'app.register.register' },
+      // },
+      // {
+      //   path: 'lock',
+      //   component: UserLockComponent,
+      //   data: { title: '锁屏', titleI18n: 'app.lock' },
+      // },
     ],
   },
   // 单页不包裹Layout

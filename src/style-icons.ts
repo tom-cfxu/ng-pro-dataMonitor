@@ -14,10 +14,12 @@ import {
   LineChartOutline,
   TableOutline,
   EnvironmentOutline,
-  ReloadOutline
+  ReloadOutline,
+  InfoCircleTwoTone
 } from '@ant-design/icons-angular/icons';
 
 export const ICONS = [
+  InfoCircleTwoTone,
   ReloadOutline,
   EnvironmentOutline,
   AreaChartOutline,

@@ -14,7 +14,7 @@ interface dataType {
 })
 export class ZmNotifyComponent implements OnInit {
 
-  @Input() data: Array<object>;
+  @Input() data: Array<dataType>;
   constructor() { }
 
   ngOnInit() {

@@ -56,10 +56,14 @@ import {
   LineChartOutline,
   TableOutline,
   EnvironmentOutline,
-  ReloadOutline
+  ReloadOutline,
+  InfoCircleTwoTone,
+  InfoCircleOutline
 } from '@ant-design/icons-angular/icons';
 
 export const ICONS_AUTO = [
+  InfoCircleTwoTone,
+  InfoCircleOutline,
   ReloadOutline,
   LineChartOutline,
   AreaChartOutline,
